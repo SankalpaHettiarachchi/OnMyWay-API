@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Driver::class);
     }
+
+    public function customers():HasMany
+    {
+        return $this->hasMany(Customer::class);
+    }
 }
