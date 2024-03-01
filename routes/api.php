@@ -20,6 +20,7 @@ Route::get('/testapi', function()
 
 Route::post('register',[AuthenticationController::class,'register']);
 Route::post('login',[AuthenticationController::class,'login']);
+Route::post('check_driver',[AuthenticationController::class,'check_driver'])->middleware('auth:sanctum');
 
 Route::post('save_driver',[DriverController::class,'store'])->middleware('auth:sanctum');
 Route::post('save_customer',[CustomerController::class,'store'])->middleware('auth:sanctum');
