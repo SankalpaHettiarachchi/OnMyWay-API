@@ -22,15 +22,23 @@ class AuthenticationController extends Controller
             'email'=>$request->email,
             'phone'=>$request->phone,
             'password'=>Hash::make($request->password),
+            'con_password'=>Hash::make($request->con_password),
         ];
 
-        $user = User::create($user_data);
-        $token = $user->createToken('OnMyWay-API')->plainTextToken;
+        // Check if hashed password and confirm hashed password are equal
+        if ($request->password === $request->con_password) {
 
-        return response([
-            'user'=>$user,
-            'token'=>$token,
-        ],201);
+            $user = User::create($user_data);
+            $token = $user->createToken('OnMyWay-API')->plainTextToken;
+
+            return response([
+                'user'=>$user,
+                'token'=>$token,
+            ],201);
+
+        } else {
+            return response()->json(['error' => 'Password and confirm password do not match'], 400);
+        }
     }
 
     public function login(LoginRequest $request)
